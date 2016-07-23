@@ -24,8 +24,8 @@ lazy val root = (project in file("."))
   ))
   .aggregate(sputterJvm, sputterJs)
 
-lazy val sputter = crossProject.in(file(".")).
-  settings(
+lazy val sputter = crossProject.in(file("."))
+  .settings(
     name := "sputter"
   )
   .jvmSettings(commonSettings: _*)

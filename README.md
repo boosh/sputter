@@ -56,10 +56,13 @@ To do:
 ## Project layout
 This project is organised into the following directories:
 
-* akka_http_sputter - Sputter serverside components written for akka-http.
-* shared - Components shared between the frontend if using scala JS and 
+* jvm - Sputter serverside components written for akka-http.
+* js - Boilerplate for interacting with the components in the JVM module
+* shared - Classes that can be shared between a ScalaJS frontend and 
   the akka-http backend.
-* scalajs_web_demo - A demo web frontend written using scala JS that uses
-  the shared components. See the README.md file in that directory for 
-  running instructions.
+
+Demo:
+* scalajs_web_demo - A demo web frontend written using scala JS that 
+  demonstrates how to use the components. See the README.md file in 
+  that directory for running instructions.
   
