@@ -5,8 +5,9 @@ import sputter.utils.Validation._
 import scalaz._
 
 
-case class ContactForm(body: String, name: Option[String], email: Option[String]) {
+case class ContactForm(body: String, name: Option[String], email: Option[String])
 
+object ContactForm {
   /**
     * Performs validation on an instance, returning error messages if
     * validation fails or the object on success.
@@ -16,10 +17,10 @@ case class ContactForm(body: String, name: Option[String], email: Option[String]
     *
     * @return Error messages on failure, or true if it's valid
     */
-  def validate(maxBodySize: Int = 2000): ValidationNel[String, Boolean] = {
+  def validate(contactForm: ContactForm, maxBodySize: Int = 2000): ValidationNel[String, Boolean] = {
     val validations = List(
-      requireThat(this.body.length > 0)("Please enter your comment"),
-      requireThat(this.body.length < maxBodySize)(s"Your " +
+      requireThat(contactForm.body.length > 0)("Please enter your comment"),
+      requireThat(contactForm.body.length < maxBodySize)(s"Your " +
         s"comment is too long. Please enter no more than $maxBodySize characters")
     )
 
@@ -31,10 +32,10 @@ case class ContactForm(body: String, name: Option[String], email: Option[String]
     *
     * @return A sanitised AppFeedbackDao object
     */
-  def sanitise: ContactForm = {
+  def sanitise(contactForm: ContactForm): ContactForm = {
 
-    this.copy(
-      body = Sanitisation.htmlToText(this.body)
+    contactForm.copy(
+      body = Sanitisation.htmlToText(contactForm.body)
     )
   }
 }

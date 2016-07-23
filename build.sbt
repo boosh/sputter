@@ -16,6 +16,8 @@ lazy val commonSettings = Seq(
   )
 )
 
+lazy val shared = project.settings(commonSettings: _*)
+
 lazy val akka_http_sputter = project.settings(commonSettings: _*)
   .settings(
     libraryDependencies ++= Seq(
@@ -75,4 +77,4 @@ lazy val sputter = (project in file("."))
   .settings(
     name := "root"
   )
-  .dependsOn(akka_http_sputter, scalajs_web_demo)
+  .dependsOn(shared, akka_http_sputter, scalajs_web_demo)

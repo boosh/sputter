@@ -10,7 +10,7 @@ import spray.json._
 
 
 trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
-  implicit val contactFormFormat = jsonFormat3(ContactForm)
+  implicit val contactFormFormat = jsonFormat3(ContactForm.apply)
 }
 
 /**

@@ -20,8 +20,9 @@ class ContactFormService(contactFormDataStore: ContactFormDataStore) {
 
   def handleForm(contactForm: ContactForm): Either[AkkaHttpExtensionsException, String] = {
 
-    contactForm.validate() match {
-      case Success(_) => contactFormDataStore.save(contactForm)
+    val sanitisedForm = ContactForm.sanitise(contactForm = contactForm)
+    ContactForm.validate(contactForm = sanitisedForm) match {
+      case Success(_) => contactFormDataStore.save(sanitisedForm)
       case Failure(e) =>
         Left(ValidationException(message = "Error validating contact form",
           errors = e.toList))

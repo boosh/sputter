@@ -3,6 +3,8 @@ This project contains a collection of akka-http components commonly
 needed by web apps and sites so you can get up and running on a new 
 project quickly. 
 
+**Project status**: Work in progress, pre-alpha. Do not use.
+
 Functionality is non-blocking where possible, implemented either as 
 classes that return Futures or as actors. Database access is coded to 
 interfaces with a default layer based on doobie provided. If you want 
@@ -50,4 +52,14 @@ To do:
 * Certain errors shouldn't be returned to clients for security. Make sure 
   only whitelisted ones are. This should really be handled by a directive.
   See the `handleExceptions` directive which might already do this.
+  
+## Project layout
+This project is organised into the following directories:
+
+* akka_http_sputter - Sputter serverside components written for akka-http.
+* shared - Components shared between the frontend if using scala JS and 
+  the akka-http backend.
+* scalajs_web_demo - A demo web frontend written using scala JS that uses
+  the shared components. See the README.md file in that directory for 
+  running instructions.
   
