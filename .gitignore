@@ -19,3 +19,7 @@ project/plugins/project/
 project/target
 project/project
 .DS_Store
+
+# JS stuff
+*/node_modules/*
+scalajs_web/assets/*
