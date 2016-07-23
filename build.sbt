@@ -12,6 +12,7 @@ lazy val commonSettings = Seq(
   scalacOptions in Test ++= Seq("-Yrangepos"),
 
   libraryDependencies ++= Seq(
+    "org.scalatest" % "scalatest_2.11" % "3.0.0-RC4" % "test"
   )
 )
 
@@ -43,39 +44,35 @@ lazy val akka_http_sputter = project.settings(commonSettings: _*)
       "org.scalaz" %% "scalaz-core" % "7.2.3",
 
       // testing
-      "org.scalatest" %% "scalatest" % "2.2.6" % "test",
       "com.typesafe.akka" %% "akka-http-testkit" % "2.4.8" % "test"
     )
   )
 
 // copy fastOptJS/fullOptJS  files to assets directory
-val webAssetsDir = "scalajs_web/assets/"
+val webAssetsDir = "scalajs_web_demo/assets/"
 
-lazy val scalaJsWebSettings = Seq(
-  crossTarget in(Compile, fullOptJS) := file(webAssetsDir),
-  crossTarget in(Compile, fastOptJS) := file(webAssetsDir),
-  crossTarget in(Compile, packageScalaJSLauncher) := file(webAssetsDir),
-    artifactPath in(Compile, fastOptJS) := ((crossTarget in(Compile, fastOptJS)).value /
-    ((moduleName in fastOptJS).value + "-opt.js")),
-
-  scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature",
-    "-language:postfixOps", "-language:implicitConversions",
-    "-language:higherKinds", "-language:existentials")
-)
-
-lazy val scalajs_web = project.settings(commonSettings: _*)
+lazy val scalajs_web_demo = project.settings(commonSettings: _*)
   .enablePlugins(ScalaJSPlugin)
-  .settings(
+  .settings(Seq(
     libraryDependencies ++= Seq(
       "com.github.chandu0101.sri" %%% "web" % "0.5.0",
       "com.github.chandu0101.sri" %%% "scalacss" % "2016.5.0"
-    )
-  )
-  .settings(scalaJsWebSettings: _*)
+    ),
+
+    crossTarget in(Compile, fullOptJS) := file(webAssetsDir),
+    crossTarget in(Compile, fastOptJS) := file(webAssetsDir),
+    crossTarget in(Compile, packageScalaJSLauncher) := file(webAssetsDir),
+    artifactPath in(Compile, fastOptJS) := ((crossTarget in(Compile, fastOptJS)).value /
+      ((moduleName in fastOptJS).value + "-opt.js")),
+
+    scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature",
+      "-language:postfixOps", "-language:implicitConversions",
+      "-language:higherKinds", "-language:existentials")
+  ))
 
 lazy val sputter = (project in file("."))
   .settings(commonSettings: _*)
   .settings(
     name := "root"
   )
-  .dependsOn(akka_http_sputter, scalajs_web)
+  .dependsOn(akka_http_sputter, scalajs_web_demo)

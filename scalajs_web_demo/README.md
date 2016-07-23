@@ -5,12 +5,12 @@ scala JS.
 
 ## How to Run 
 In one terminal run the following from the project root directory (the 
-one containing `build.sbt`): `sbt "project scalajs_web" ~fastOptJS`
+one containing `build.sbt`): `sbt "project scalajs_web_demo" ~fastOptJS`
 
 In another, run:
 
 ```
-cd scalajs_web
+cd scalajs_web_demo
 
 npm install
 

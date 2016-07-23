@@ -18,7 +18,7 @@ object HomeScreen {
   @ScalaJSDefined
   class Component extends ReactComponent[Unit, Unit] {
     def render() = div(className = GlobalStyle.flexOneAndCenter)(
-      span(className = GlobalStyle.bigText)("Home Screen")
+      span(className = GlobalStyle.bigText)("Test Home Screen")
     )
   }
 
