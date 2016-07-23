@@ -1,4 +1,4 @@
-package sputter.demo.web.styles
+package sputter.jvm.demo.web.styles
 
 import scalacss.Defaults._
 

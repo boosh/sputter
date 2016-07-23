@@ -5,8 +5,6 @@ import sputter.utils.Validation._
 import scalaz._
 
 
-case class ContactForm(body: String, name: Option[String], email: Option[String])
-
 object ContactForm {
   /**
     * Performs validation on an instance, returning error messages if

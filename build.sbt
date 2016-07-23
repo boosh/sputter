@@ -3,7 +3,7 @@ name := "sputter"
 lazy val commonSettings = Seq(
   organization := "com.github.boosh",
 
-  version := "0.1.0",
+  version := "0.1.0-SNAPSHOT",
 
   scalaVersion := "2.11.8",
 
@@ -16,10 +16,20 @@ lazy val commonSettings = Seq(
   )
 )
 
-lazy val shared = project.settings(commonSettings: _*)
+lazy val root = (project in file("."))
+  .settings(commonSettings: _*)
+  .settings(Seq(
+    publish := {},
+    publishLocal := {}
+  ))
+  .aggregate(sputterJvm, sputterJs)
 
-lazy val akka_http_sputter = project.settings(commonSettings: _*)
-  .settings(
+lazy val sputter = crossProject.in(file(".")).
+  settings(
+    name := "sputter"
+  )
+  .jvmSettings(commonSettings: _*)
+  .jvmSettings(
     libraryDependencies ++= Seq(
       "com.typesafe" % "config" % "1.3.0",
       "com.typesafe.akka" %% "akka-actor" % "2.4.8",
@@ -49,6 +59,12 @@ lazy val akka_http_sputter = project.settings(commonSettings: _*)
       "com.typesafe.akka" %% "akka-http-testkit" % "2.4.8" % "test"
     )
   )
+  .jsSettings(commonSettings: _*)
+
+lazy val sputterJvm = sputter.jvm
+lazy val sputterJs = sputter.js
+
+///////// Demo settings /////////
 
 // copy fastOptJS/fullOptJS  files to assets directory
 val webAssetsDir = "scalajs_web_demo/assets/"
@@ -71,10 +87,3 @@ lazy val scalajs_web_demo = project.settings(commonSettings: _*)
       "-language:postfixOps", "-language:implicitConversions",
       "-language:higherKinds", "-language:existentials")
   ))
-
-lazy val sputter = (project in file("."))
-  .settings(commonSettings: _*)
-  .settings(
-    name := "root"
-  )
-  .dependsOn(shared, akka_http_sputter, scalajs_web_demo)
