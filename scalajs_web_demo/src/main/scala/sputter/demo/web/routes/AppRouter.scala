@@ -1,10 +1,11 @@
-package sri.templates.web.routes
+package sputter.demo.web.routes
 
+import sputter.demo.web.components.TopNav
 import sri.core.ReactElement
 import sri.scalacss.Defaults._
-import sri.templates.web.components._
-import sri.templates.web.screens.HomeScreen
-import sri.templates.web.styles.GlobalStyle
+import sputter.demo.web.components._
+import sputter.demo.web.screens.HomeScreen
+import sputter.demo.web.styles.GlobalStyle
 import sri.web.router._
 import sri.web.vdom.htmltags._
 object AppRouter {

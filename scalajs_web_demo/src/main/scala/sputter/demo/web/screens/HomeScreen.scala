@@ -1,15 +1,14 @@
-package sri.templates.web.screens
+package sputter.demo.web.screens
 
-import sri.templates.web.styles.GlobalStyle
-import sri.web.all._
-import sri.web.vdom.htmltags._
+import sputter.demo.web.styles.GlobalStyle
 import sri.core._
 import sri.universal.components._
 import sri.web.all._
 import sri.web.vdom.htmltags._
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.ScalaJSDefined
-import scala.scalajs.js.{UndefOr => U, undefined => undefined}
+import scala.scalajs.js.{undefined, UndefOr => U}
 import scalacss.Defaults._
 import sri.scalacss.Defaults._
 

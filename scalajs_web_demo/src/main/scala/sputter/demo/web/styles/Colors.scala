@@ -1,4 +1,4 @@
-package sri.templates.web.styles
+package sputter.demo.web.styles
 
 object Colors {
 

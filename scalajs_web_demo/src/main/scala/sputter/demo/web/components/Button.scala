@@ -1,4 +1,4 @@
-package sri.templates.web.components
+package sputter.demo.web.components
 
 import sri.core._
 import sri.web.all._

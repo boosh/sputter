@@ -1,8 +1,8 @@
-package sri.templates.web
+package sputter.demo.web
 
 import org.scalajs.dom
-import sri.templates.web.routes.AppRouter
-import sri.templates.web.styles.AppStyles
+import sputter.demo.web.routes.AppRouter
+import sputter.demo.web.styles.AppStyles
 import sri.web.ReactDOM
 
 import scala.scalajs.js.Dynamic.{global => g, literal => json}
