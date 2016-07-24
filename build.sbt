@@ -66,7 +66,8 @@ lazy val sputterJs = sputter.js
 
 ///////// Demo settings /////////
 
-lazy val demo_jvm = project in file("demo_jvm")
+lazy val demo_jvm = project.settings(commonSettings: _*)
+  .dependsOn(sputterJvm)
 
 // copy fastOptJS/fullOptJS  files to assets directory
 val webAssetsDir = "scalajs_web_demo/assets/"
