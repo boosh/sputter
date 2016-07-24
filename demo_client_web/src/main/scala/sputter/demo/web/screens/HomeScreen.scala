@@ -1,5 +1,6 @@
 package sputter.demo.web.screens
 
+import org.scalajs.dom
 import sputter.demo.web.styles.GlobalStyle
 import sri.core._
 import sri.universal.components._
@@ -17,7 +18,7 @@ object HomeScreen {
   @ScalaJSDefined
   class Component extends ReactComponent[Unit, Unit] {
     def render() = {
-      println("Rendering home screen")
+      dom.console.log("Rendering home screen")
 
       div(className = GlobalStyle.flexOneAndCenter)(
         span(className = GlobalStyle.bigText)("Test Home Screen")

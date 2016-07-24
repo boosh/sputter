@@ -87,10 +87,12 @@ lazy val demo_client_web = project.settings(commonSettings: _*)
       "com.lihaoyi" %% "upickle" % "0.4.1"
     ),
 
-    skip in packageJSDependencies := false,
-    jsDependencies ++= Seq(
-      "org.webjars.npm" % "frisbee" % "1.1.0" / "frisbee.js"
-    ),
+// hmm frisbee works on the web and in react-native, so it might be better than
+// using futures in scalajs. See https://github.com/glazedio/frisbee
+//    skip in packageJSDependencies := false,
+//    jsDependencies ++= Seq(
+//      "org.webjars.npm" % "frisbee" % "1.1.0" / "frisbee.js"
+//    ),
 
     crossTarget in(Compile, fullOptJS) := file(webAssetsDir),
     crossTarget in(Compile, fastOptJS) := file(webAssetsDir),

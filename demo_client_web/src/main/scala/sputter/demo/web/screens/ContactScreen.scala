@@ -1,6 +1,8 @@
 package sputter.demo.web.screens
 
+import org.scalajs.dom
 import sputter.demo.web.styles.GlobalStyle
+import sputter.shared.contactform.ContactForm
 import sri.core._
 import sri.scalacss.Defaults._
 import sri.web.all._
@@ -15,7 +17,13 @@ object ContactScreen {
   @ScalaJSDefined
   class Component extends ReactComponent[Unit, Unit] {
     def render() = {
-      println("In contact screen")
+      dom.console.log("In contact screen")
+
+      // see http://www.lihaoyi.com/hands-on-scala-js/#dom.extensions and
+      // http://www.lihaoyi.com/hands-on-scala-js/#IntegratingClient-Server for making ajax calls
+      // (especially note the part on autowire, http://www.lihaoyi.com/hands-on-scala-js/#Autowire)
+      val contactForm = ContactForm(body = "static body", name = None, email = None)
+      println(s"contact form = $contactForm")
 
       div(className = GlobalStyle.flexOneAndCenter)(
         span(className = GlobalStyle.bigText)("Contact Screen")
