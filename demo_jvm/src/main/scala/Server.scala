@@ -8,6 +8,9 @@ import sputter.jvm.datastores.mock.contactform.ContactFormMockDataStore
 
 /**
   * Demo server using sputter components.
+  *
+  * Run this with `sbt "project demo_jvm" run` from the directory containing
+  * `build.sbt`, or build a fat jar with `sbt "project demo_jvm" assembly`.
   */
 object Server extends App {
 
@@ -24,6 +27,10 @@ object Server extends App {
     * curl -H "Content-Type: application/json" -X POST \
     *   -d '{"body":"test contact form body", "name": "Me", "email": "me@example.com"}' \
     *   http://SERVER_HOST:SERVER_PORT/contact
+    *
+    * Mix and match the components to use by combining them with a ~.
+    * Either use the provided data stores or write your own implementing the
+    * necessary traits.
     */
   val route = new ContactFormRestEndpoint(
     new ContactFormService(new ContactFormMockDataStore())
