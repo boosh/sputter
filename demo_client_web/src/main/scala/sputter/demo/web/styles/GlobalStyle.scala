@@ -1,4 +1,4 @@
-package sputter.jvm.demo.web.styles
+package sputter.demo.web.styles
 
 import scalacss.Defaults._
 
@@ -21,8 +21,6 @@ object GlobalStyle extends StyleSheet.Inline {
 
   val flexOneAndDirectionVertical = style(vertical, flex := "1")
 
-
   val bigText = style(fontWeight._500,
     fontSize(1.5.em))
-
 }

@@ -9,8 +9,7 @@ import scalacss.mutable.GlobalRegistry
 object AppStyles {
 
   def load() = {
-    GlobalRegistry.register(GlobalStyle,
-      styles)
+    GlobalRegistry.register(GlobalStyle, styles)
     GlobalRegistry.addToDocumentOnRegistration()
   }
 }

@@ -2,7 +2,7 @@ package sputter.demo.web.components
 
 import sputter.demo.web.styles.Colors
 import sri.scalacss.Defaults._
-import sputter.demo.web.routes.AppRouter.HomePage
+import sputter.demo.web.routes.AppRouter.{ContactPage, HomePage}
 import sri.web.all._
 import sri.web.router.{WebDynamicPage, WebRouterComponent, WebStaticPage}
 import sri.web.vdom.htmltags._
@@ -19,17 +19,24 @@ object TopNav {
   class Component extends WebRouterComponent[Unit, Unit] {
     def render() = {
       div(className = styles.navMenu)(
-        getStaticItem("Home", HomePage))
+        getStaticItem("Home", HomePage),
+        getStaticItem("Contact", ContactPage)
+      )
     }
 
-    def getStaticItem(text: String, page: WebStaticPage, query: js.UndefOr[js.Object] = js.undefined, state: js.UndefOr[js.Object] = js.undefined) = {
+    def getStaticItem(text: String, page: WebStaticPage,
+                      query: js.UndefOr[js.Object] = js.undefined,
+                      state: js.UndefOr[js.Object] = js.undefined) = {
       Button(style = styles.menuItem(page == currentRoute.page),
         onPress = () => navigateTo(page, query = query, state = state))(
           span()(text)
         )
     }
 
-    def getDynamicItem(text: String, page: WebDynamicPage[_], placeholder: String, query: js.UndefOr[js.Object] = js.undefined, state: js.UndefOr[js.Object] = js.undefined) = {
+    def getDynamicItem(text: String, page: WebDynamicPage[_],
+                       placeholder: String,
+                       query: js.UndefOr[js.Object] = js.undefined,
+                       state: js.UndefOr[js.Object] = js.undefined) = {
       Button(style = styles.menuItem(page == currentRoute.page),
         onPress = () => navigateToDynamic(page, placeholder = placeholder, query = query, state = state))(
           span()(text)
@@ -65,17 +72,12 @@ object TopNav {
             fontWeight.normal)
       )
     })
-
-
   }
 
+  val constructor = getTypedConstructor(js.constructorOf[Component], classOf[Component])
 
-  val ctor = getTypedConstructor(js.constructorOf[Component], classOf[Component])
+  constructor.contextTypes = sri.web.router.routerContextTypes
 
-  ctor.contextTypes = sri.web.router.routerContextTypes
-
-
-  def apply(ref: js.UndefOr[String] = "", key: js.Any = {}) = createElementNoProps(ctor)
-
+  def apply(ref: js.UndefOr[String] = "", key: js.Any = {}) = createElementNoProps(constructor)
 }
 

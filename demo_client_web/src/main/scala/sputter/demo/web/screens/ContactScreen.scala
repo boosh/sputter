@@ -2,25 +2,23 @@ package sputter.demo.web.screens
 
 import sputter.demo.web.styles.GlobalStyle
 import sri.core._
-import sri.universal.components._
+import sri.scalacss.Defaults._
 import sri.web.all._
 import sri.web.vdom.htmltags._
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.ScalaJSDefined
-import scala.scalajs.js.{undefined, UndefOr => U}
-import scalacss.Defaults._
-import sri.scalacss.Defaults._
+import scala.scalajs.js.{UndefOr => U}
 
-object HomeScreen {
+object ContactScreen {
 
   @ScalaJSDefined
   class Component extends ReactComponent[Unit, Unit] {
     def render() = {
-      println("Rendering home screen")
+      println("In contact screen")
 
       div(className = GlobalStyle.flexOneAndCenter)(
-        span(className = GlobalStyle.bigText)("Test Home Screen")
+        span(className = GlobalStyle.bigText)("Contact Screen")
       )
     }
   }

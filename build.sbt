@@ -1,3 +1,6 @@
+import sbt._
+import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
+
 name := "sputter"
 
 lazy val commonSettings = Seq(
@@ -66,9 +69,11 @@ lazy val sputterJs = sputter.js
 
 ///////// Demo settings /////////
 
+// demo server
 lazy val demo_jvm = project.settings(commonSettings: _*)
   .dependsOn(sputterJvm)
 
+// demo web app settings
 // copy fastOptJS/fullOptJS  files to assets directory
 val webAssetsDir = "demo_client_web/assets/"
 
@@ -78,7 +83,13 @@ lazy val demo_client_web = project.settings(commonSettings: _*)
   .settings(Seq(
     libraryDependencies ++= Seq(
       "com.github.chandu0101.sri" %%% "web" % "0.5.0",
-      "com.github.chandu0101.sri" %%% "scalacss" % "2016.5.0"
+      "com.github.chandu0101.sri" %%% "scalacss" % "2016.5.0",
+      "com.lihaoyi" %% "upickle" % "0.4.1"
+    ),
+
+    skip in packageJSDependencies := false,
+    jsDependencies ++= Seq(
+      "org.webjars.npm" % "frisbee" % "1.1.0" / "frisbee.js" 
     ),
 
     crossTarget in(Compile, fullOptJS) := file(webAssetsDir),

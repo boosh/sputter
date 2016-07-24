@@ -14,6 +14,10 @@ object Button {
 
   case class Props(style: String, onPress: () => _)
 
-  def apply(style: String, onPress: () => _,key : js.UndefOr[String] = js.undefined)(children : ReactNode*) = createStatelessFunctionElementWithChildren(Component, Props(style, onPress),key = key)(children : _*)
+  def apply(style: String, onPress: () => _,
+            key: js.UndefOr[String] = js.undefined)
+           (children : ReactNode*) = {
+    createStatelessFunctionElementWithChildren(Component, Props(style, onPress), key = key)(children : _*)
+  }
 
 }
