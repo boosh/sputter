@@ -7,14 +7,15 @@ project quickly.
 
 Functionality is non-blocking where possible, implemented either as 
 classes that return Futures or as actors. Database access is coded to 
-interfaces with a default layer based on doobie provided. If you want 
-to use a different storage engine, just implement your own classes and 
-update the DI config.
+interfaces. A mock interface for quick testing and a default 
+implementation based on doobie are provided. If you want 
+to use different storage engines, just implement your own classes and 
+pass them into components as constructor parameters.
 
 REST endpoints are provided for some packages. Simply add the routes 
 to your project to expose them. However, since these just delegate to 
 actors and other classes, it's simple to use these components using 
-other transports (e.g. gRPC, relay, etc.).
+other transports (e.g. gRPC, relay, etc.). See `demo_jvm` for examples.
 
 The following components are included:
 
@@ -46,7 +47,11 @@ Another package contains ScalaJS web widgets built on react for:
 * Log in
 * Registration (super simple)
 
-Logging is also configured with Log4J.
+Other features:
+* Logging is preconfigured with Log4J. Override settings according to 
+  their docs.
+* Typesafe config is used to provide extensible configuration with 
+  sensible defaults.
 
 To do: 
 * Certain errors shouldn't be returned to clients for security. Make sure 
@@ -56,13 +61,15 @@ To do:
 ## Project layout
 This project is organised into the following directories:
 
-* jvm - Sputter serverside components written for akka-http.
+* jvm - Sputter server-side components written for akka-http.
 * js - Boilerplate for interacting with the components in the JVM module
 * shared - Classes that can be shared between a ScalaJS frontend and 
   the akka-http backend.
 
-Demo:
-* scalajs_web_demo - A demo web frontend written using scala JS that 
+Demos:
+* demo_jvm - A demo akka-http server using the components with mock
+  datastores for quick testing.
+* demo_client_web - A demo web frontend written using scala JS that 
   demonstrates how to use the components. See the README.md file in 
   that directory for running instructions.
   

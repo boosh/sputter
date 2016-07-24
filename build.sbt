@@ -70,10 +70,11 @@ lazy val demo_jvm = project.settings(commonSettings: _*)
   .dependsOn(sputterJvm)
 
 // copy fastOptJS/fullOptJS  files to assets directory
-val webAssetsDir = "scalajs_web_demo/assets/"
+val webAssetsDir = "demo_client_web/assets/"
 
-lazy val scalajs_web_demo = project.settings(commonSettings: _*)
+lazy val demo_client_web = project.settings(commonSettings: _*)
   .enablePlugins(ScalaJSPlugin)
+  .dependsOn(sputterJs)
   .settings(Seq(
     libraryDependencies ++= Seq(
       "com.github.chandu0101.sri" %%% "web" % "0.5.0",
