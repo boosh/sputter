@@ -89,7 +89,7 @@ lazy val demo_client_web = project.settings(commonSettings: _*)
 
     skip in packageJSDependencies := false,
     jsDependencies ++= Seq(
-      "org.webjars.npm" % "frisbee" % "1.1.0" / "frisbee.js" 
+      "org.webjars.npm" % "frisbee" % "1.1.0" / "frisbee.js"
     ),
 
     crossTarget in(Compile, fullOptJS) := file(webAssetsDir),
