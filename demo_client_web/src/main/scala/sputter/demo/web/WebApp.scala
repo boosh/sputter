@@ -11,11 +11,9 @@ import scala.scalajs.js.annotation.JSExport
 
 object WebApp extends JSApp {
 
-
   @JSExport
   override def main(): Unit = {
     AppStyles.load()
     ReactDOM.render(AppRouter.router, dom.document.getElementById("app"))
   }
-
 }

@@ -25,8 +25,12 @@ object ContactScreen {
       val contactForm = ContactForm(body = "static body", name = None, email = None)
       println(s"contact form = $contactForm")
 
-      div(className = GlobalStyle.flexOneAndCenter)(
-        span(className = GlobalStyle.bigText)("Contact Screen")
+      form()(
+        div(className = GlobalStyle.flexOneAndCenter)(
+          span(className = GlobalStyle.bigText)("Contact Screen"),
+          textarea()(),
+          button(id = "submit")("Submit")
+        )
       )
     }
   }

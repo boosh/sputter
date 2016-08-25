@@ -1,6 +1,6 @@
 # Sputter Web Demo
 This demo shows how to use sputter in a reactjs web app. It uses
-[Sri](https://github.com/chandu0101/sri) to bridge the gap with with 
+[Sri](https://github.com/chandu0101/sri) to bridge the gap with 
 scala JS. 
 
 ## How to Run 
