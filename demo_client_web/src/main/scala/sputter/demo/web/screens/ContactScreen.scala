@@ -27,8 +27,13 @@ object ContactScreen {
 
       form()(
         div(className = GlobalStyle.flexOneAndCenter)(
-          span(className = GlobalStyle.bigText)("Contact Screen"),
-          textarea()(),
+          span(className = GlobalStyle.bigText)("Contact us"),
+          label()("Your name",
+            input(id = "name")),
+          label()("Your email address",
+            input(`type`="email", id = "email")),
+          label()("Comments",
+            textarea(id = "body")()),
           button(id = "submit")("Submit")
         )
       )
