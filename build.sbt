@@ -53,6 +53,10 @@ lazy val sputter = crossProject.in(file("."))
       // third party SDKs
       "com.amazonaws" % "aws-java-sdk-s3" % "1.11.19",
 
+      // type-safe REST calls
+      "com.lihaoyi" %% "autowire" % "0.2.5",
+      "com.lihaoyi" %% "upickle" % "0.4.1",
+
       // utils
       "commons-io" % "commons-io" % "2.4",
       "org.jsoup" % "jsoup" % "1.9.2",
@@ -63,6 +67,12 @@ lazy val sputter = crossProject.in(file("."))
     )
   )
   .jsSettings(commonSettings: _*)
+  .jsSettings(
+    libraryDependencies ++= Seq(
+      "com.lihaoyi" %%% "upickle" % "0.4.1",
+      "com.lihaoyi" %%% "autowire" % "0.2.5"
+    )
+  )
 
 lazy val sputterJvm = sputter.jvm
 lazy val sputterJs = sputter.js
@@ -83,8 +93,9 @@ lazy val demo_client_web = project.settings(commonSettings: _*)
   .settings(Seq(
     libraryDependencies ++= Seq(
       "com.github.chandu0101.sri" %%% "web" % "0.5.0",
-      "com.github.chandu0101.sri" %%% "scalacss" % "2016.5.0",
-      "com.lihaoyi" %% "upickle" % "0.4.1"
+      "com.github.chandu0101.sri" %%% "scalacss" % "2016.5.0"
+//      "com.lihaoyi" %% "upickle" % "0.4.1",
+//      "com.lihaoyi" %%% "autowire" % "0.2.5"
     ),
 
 // hmm frisbee works on the web and in react-native, so it might be better than
