@@ -10,12 +10,29 @@ import sri.web.vdom.htmltags._
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.ScalaJSDefined
-import scala.scalajs.js.{UndefOr => U}
 
 object ContactScreen {
 
   @ScalaJSDefined
   class Component extends ReactComponent[Unit, Unit] {
+
+    var bodyRef: dom.html.Input = _
+    var nameRef: dom.html.Input = _
+    var emailRef: dom.html.Input = _
+
+    def handleClick(e: ReactMouseEventI) = {
+
+      e.preventDefault()
+
+      Option(bodyRef).foreach { body =>
+        val form = ContactForm(body = body.value,
+          name = Option(nameRef).map(_.value),
+          email = Option(emailRef).map(_.value))
+
+        println(s"Inside click handler with form: $form")
+      }
+    }
+
     def render() = {
       dom.console.log("In contact screen")
 
@@ -29,12 +46,13 @@ object ContactScreen {
         div(className = GlobalStyle.flexOneAndCenter)(
           span(className = GlobalStyle.bigText)("Contact us"),
           label()("Your name",
-            input(id = "name")),
+            input(id = "name", ref = (e: dom.html.Input) => nameRef = e)),
           label()("Your email address",
-            input(`type`="email", id = "email")),
+            input(`type`="email", id = "email",
+              ref = (e: dom.html.Input) => emailRef = e)),
           label()("Comments",
-            textarea(id = "body")()),
-          button(id = "submit")("Submit")
+            textarea(id = "body", ref = (e: dom.html.Input) => bodyRef = e)()),
+          button(id = "submit", onClick = handleClick(_: ReactMouseEventI))("Submit")
         )
       )
     }
