@@ -6,12 +6,13 @@ import upickle.default.{Reader, Writer}
 
 
 /**
-  * Default client for making type-safe REST requests
+  * Generic client for making type-safe JSON REST requests
   */
 object AjaxClient extends autowire.Client[String, Reader, Writer]{
   override def doCall(req: Request) = {
     Ajax.post(
-      url = "http://localhost:8080/" + req.path.mkString("/"),
+      // todo: Pull server path from config
+      url = "http://localhost:8080/api/" + req.path.mkString("/"),
       data = upickle.default.write(req.args)
     ).map(_.responseText)
   }

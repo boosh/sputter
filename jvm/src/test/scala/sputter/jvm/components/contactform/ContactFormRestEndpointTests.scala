@@ -15,7 +15,7 @@ import sputter.shared.contactform.ContactForm
 class ContactFormRestEndpointTests extends WordSpec with Matchers
   with ScalatestRouteTest with JsonSupport {
 
-  val endpoint = new ContactFormRestEndpoint(new ContactFormService(new SimpleContactFormDataStore()))
+  val endpoint = new ContactFormApiImpl(new ContactFormService(new SimpleContactFormDataStore()))
 
   "return a MethodNotAllowed error for GET requests" in {
     Get("/contact") ~> Route.seal(endpoint.route) ~> check {

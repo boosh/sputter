@@ -5,7 +5,7 @@ import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
 import sputter.jvm.components.RestRouter
-import sputter.jvm.components.contactform.ContactFormRestEndpoint
+import sputter.jvm.components.contactform.ContactFormApiImpl
 import sputter.jvm.components.contactform.datastore.ContactFormService
 import sputter.jvm.datastores.mock.contactform.ContactFormMockDataStore
 import akka.http.scaladsl.server.Directives._
@@ -21,7 +21,7 @@ import akka.http.scaladsl.model.headers.{`Access-Control-Allow-Credentials`, `Ac
   * Run this with `sbt "project demo_jvm" run` from the directory containing
   * `build.sbt`, or build a fat jar with `sbt "project demo_jvm" assembly`.
   */
-object Server extends App with CorsSupport with ContactFormRestEndpoint {
+object Server extends App with CorsSupport with ContactFormApiImpl {
 
   // CORS config
   override val corsAllowOrigins: List[String] = List("http://localhost:8090")
@@ -44,39 +44,36 @@ object Server extends App with CorsSupport with ContactFormRestEndpoint {
 
   val logger = Logging(system, getClass)
 
-  val contactFormService = new ContactFormService(new ContactFormMockDataStore())
-
   /**
     * Routes with mock logging endpoints. Test them with:
     *
     * curl -H "Content-Type: application/json" -X POST \
     *   -d '{"body":"test contact form body", "name": "Me", "email": "me@example.com"}' \
     *   http://SERVER_HOST:SERVER_PORT/contact
-    *
-    * Mix and match the components to use by combining them with a ~.
-    * Either use the provided data stores or write your own implementing the
-    * necessary traits.
     */
-//  val route = new ContactFormRestEndpoint(
-//    new ContactFormService(new ContactFormMockDataStore())
-//  ).route
-  // ~ nextRoute...
+  val contactFormService = new ContactFormService(new ContactFormMockDataStore())
 
-  val route = get {
-    pathSingleSlash {
-      complete("OK")
-    }
-  } ~
-  post {
-    path(Segments) { s =>
-      entity(as[String]) { e =>
-        complete {
-          RestRouter.route[ContactFormApi](Server)(
-            autowire.Core.Request(
-              s,
-              upickle.default.read[Map[String, String]](e)
+  val route = cors {
+    get {
+      // allows us to test the server is actually online with `curl http://localhost:8080/`
+      pathEndOrSingleSlash {
+        complete("OK")
+      }
+    } ~
+    post {
+      // generic API request handler
+      path("api" / Segments) { s =>
+        entity(as[String]) { e =>
+          // todo: would be nice to `reject` calls that resulted in errors instead
+          // of blindly `complete`-ing everything
+          complete {
+            RestRouter.route[ContactFormApi](Server)(
+              autowire.Core.Request(
+                s,
+                upickle.default.read[Map[String, String]](e)
+              )
             )
-          )
+          }
         }
       }
     }
