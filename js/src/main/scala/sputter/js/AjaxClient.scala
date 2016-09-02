@@ -11,7 +11,7 @@ import upickle.default.{Reader, Writer}
 object AjaxClient extends autowire.Client[String, Reader, Writer]{
   override def doCall(req: Request) = {
     Ajax.post(
-      url = req.path.mkString("/"),
+      url = "http://localhost:8080/" + req.path.mkString("/"),
       data = upickle.default.write(req.args)
     ).map(_.responseText)
   }

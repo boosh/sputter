@@ -2,14 +2,18 @@ package sputter.demo.web.screens
 
 import org.scalajs.dom
 import sputter.demo.web.styles.GlobalStyle
-import sputter.shared.contactform.ContactForm
+import sputter.js.AjaxClient
+import sputter.shared.contactform.{ContactForm, ContactFormApi}
 import sri.core._
 import sri.scalacss.Defaults._
 import sri.web.all._
 import sri.web.vdom.htmltags._
 
+import autowire._
 import scala.scalajs.js
 import scala.scalajs.js.annotation.ScalaJSDefined
+import scalajs.concurrent.JSExecutionContext.Implicits.queue
+
 
 object ContactScreen {
 
@@ -30,6 +34,10 @@ object ContactScreen {
           email = Option(emailRef).map(_.value))
 
         println(s"Inside click handler with form: $form")
+
+        AjaxClient[ContactFormApi].contact(form).call().foreach { r =>
+          print(s"Received response to contact REST call: $r")
+        }
       }
     }
 

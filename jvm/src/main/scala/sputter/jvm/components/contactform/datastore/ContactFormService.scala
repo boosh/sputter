@@ -1,5 +1,6 @@
-package sputter.jvm.components.contactform
+package sputter.jvm.components.contactform.datastore
 
+import sputter.jvm.components.contactform.ContactFormCompanion
 import sputter.jvm.components.exceptions.{AkkaHttpExtensionsException, DataStoreException, ValidationException}
 import sputter.shared.contactform.ContactForm
 

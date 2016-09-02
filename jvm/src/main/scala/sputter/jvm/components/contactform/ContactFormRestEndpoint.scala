@@ -1,43 +1,55 @@
 package sputter.jvm.components.contactform
 
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
+import akka.event.LoggingAdapter
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server.Directives
-import org.slf4j.LoggerFactory
-import spray.json._
 import sputter.jvm.components.akkahttp.ValidationListRejection
+import sputter.jvm.components.contactform.datastore.ContactFormService
 import sputter.jvm.components.exceptions.ValidationException
-import sputter.shared.contactform.ContactForm
+import sputter.shared.{ResponseError, ResponseOK}
+import sputter.shared.contactform.{ContactForm, ContactFormApi, ContactFormResponse}
 
-
-trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
-  implicit val contactFormFormat = jsonFormat3(ContactForm)
-}
 
 /**
   * Endpoint to let users contact you. You can optionally be notified when
   * they do.
   */
-class ContactFormRestEndpoint(contactFormService: ContactFormService)
-  extends Directives with JsonSupport {
+trait ContactFormRestEndpoint extends ContactFormApi {
 
-  val logger = LoggerFactory.getLogger(getClass)
+  val contactFormService: ContactFormService
 
-  val route = path("contact") {
-    pathEndOrSingleSlash {
-      post {
-        entity(as[ContactForm]) { contactForm =>
+  val logger: LoggingAdapter
 
-          logger.debug(s"Received contact form POST request with payload: $contactForm")
+//  val route = path("contact") {
+//    pathEndOrSingleSlash {
+//      post {
+//        entity(as[ContactForm]) { contactForm =>
+//
+//          logger.debug(s"Received contact form POST request with payload: $contactForm")
+//
+//          contactFormService.handleForm(contactForm = contactForm) match {
+//            case Right(id) => complete(StatusCodes.OK, id)
+//            case Left(e: ValidationException) => reject(
+//              ValidationListRejection(message = e.message, errors = e.errors))
+//            case Left(e) => throw new RuntimeException(e.message)
+//          }
+//        }
+//      }
+//    }
+//  }
 
-          contactFormService.handleForm(contactForm = contactForm) match {
-            case Right(id) => complete(StatusCodes.OK, id)
-            case Left(e: ValidationException) => reject(
-              ValidationListRejection(message = e.message, errors = e.errors))
-            case Left(e) => throw new RuntimeException(e.message)
-          }
-        }
-      }
+  override def contact(form: ContactForm) = {
+
+    logger.debug(s"Received contact form POST request with payload: $form")
+
+    contactFormService.handleForm(contactForm = form) match {
+        // todo: wrap this in `complete`
+      case Right(id) => ContactFormResponse(status = ResponseOK(), errors = List())
+      // todo: wrap this in `reject`
+      case Left(e: ValidationException) => ContactFormResponse(
+        status = ResponseError(), errors = e.errors)
+//        reject(ValidationListRejection(message = e.message, errors = e.errors))
+      case Left(e) => throw new RuntimeException(e.message)
     }
   }
 }

@@ -5,6 +5,7 @@ import akka.http.scaladsl.server._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest._
 import spray.json._
+import sputter.jvm.components.contactform.datastore.ContactFormService
 import sputter.shared.contactform.ContactForm
 
 

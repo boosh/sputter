@@ -1,7 +1,7 @@
 package sputter.jvm.datastores.mock.contactform
 
 import org.slf4j.LoggerFactory
-import sputter.jvm.components.contactform.ContactFormDataStore
+import sputter.jvm.components.contactform.datastore.ContactFormDataStore
 import sputter.jvm.components.exceptions.DataStoreException
 import sputter.shared.contactform.ContactForm
 

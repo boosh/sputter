@@ -1,6 +1,7 @@
 package sputter.jvm.components.contactform
 
 import org.scalatest._
+import sputter.jvm.components.contactform.datastore.{ContactFormDataStore, ContactFormService}
 import sputter.jvm.components.exceptions.DataStoreException
 import sputter.shared.contactform.ContactForm
 
