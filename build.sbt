@@ -69,6 +69,7 @@ lazy val sputter = crossProject.in(file("."))
   .jsSettings(commonSettings: _*)
   .jsSettings(
     libraryDependencies ++= Seq(
+      "org.scala-js" %%% "scalajs-dom" % "0.9.0",
       "com.lihaoyi" %%% "upickle" % "0.4.1",
       "com.lihaoyi" %%% "autowire" % "0.2.5"
     )
@@ -94,16 +95,7 @@ lazy val demo_client_web = project.settings(commonSettings: _*)
     libraryDependencies ++= Seq(
       "com.github.chandu0101.sri" %%% "web" % "0.5.0",
       "com.github.chandu0101.sri" %%% "scalacss" % "2016.5.0"
-//      "com.lihaoyi" %% "upickle" % "0.4.1",
-//      "com.lihaoyi" %%% "autowire" % "0.2.5"
     ),
-
-// hmm frisbee works on the web and in react-native, so it might be better than
-// using futures in scalajs. See https://github.com/glazedio/frisbee
-//    skip in packageJSDependencies := false,
-//    jsDependencies ++= Seq(
-//      "org.webjars.npm" % "frisbee" % "1.1.0" / "frisbee.js"
-//    ),
 
     crossTarget in(Compile, fullOptJS) := file(webAssetsDir),
     crossTarget in(Compile, fastOptJS) := file(webAssetsDir),
