@@ -36,7 +36,10 @@ object ContactScreen {
         println(s"Inside click handler with form: $form")
 
         AjaxClient[ContactFormApi].contact(form).call().foreach { r =>
-          print(s"Received response to contact REST call: $r")
+          dom.console.log(s"Received response to contact REST call: $r")
+
+          // todo: show a success message on success, or the list of error
+          // messages on error
         }
       }
     }
