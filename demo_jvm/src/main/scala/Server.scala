@@ -17,7 +17,7 @@ import sputter.jvm.components.registration.RegistrationApiImpl
 import sputter.jvm.components.registration.datastore.RegistrationService
 import sputter.jvm.datastores.mock.registration.RegistrationMockDataStore
 
-//trait ApiImpl extends ContactApiImpl with RegistrationApiImpl
+trait ApiImpl extends Api with ContactApiImpl with RegistrationApiImpl
 
 /**
   * Demo server using sputter components.
@@ -25,7 +25,7 @@ import sputter.jvm.datastores.mock.registration.RegistrationMockDataStore
   * Run this with `sbt "project demo_jvm" run` from the directory containing
   * `build.sbt`, or build a fat jar with `sbt "project demo_jvm" assembly`.
   */
-object Server extends App with CorsSupport with RegistrationApiImpl {
+object Server extends App with CorsSupport with ApiImpl {
 
   // CORS config
   override val corsAllowOrigins: List[String] = List("http://localhost:8090")
@@ -72,7 +72,7 @@ object Server extends App with CorsSupport with RegistrationApiImpl {
           // todo: would be nice to `reject` calls that resulted in errors instead
           // of blindly `complete`-ing everything
           complete {
-            RestRouter.route[RegistrationApi](Server)(
+            RestRouter.route[Api](Server)(
               autowire.Core.Request(
                 s,
                 upickle.default.read[Map[String, String]](e)

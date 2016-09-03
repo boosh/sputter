@@ -35,7 +35,7 @@ object RegistrationScreen {
         password = passwordRef.value,
         email = emailRef.value)
 
-      println(s"Inside click handler with form: $form")
+      println(s"Inside click handler for registration form")
 
       AjaxClient[Api].register(form).call().foreach { r =>
         dom.console.log(s"Received response to REST call: $r")
