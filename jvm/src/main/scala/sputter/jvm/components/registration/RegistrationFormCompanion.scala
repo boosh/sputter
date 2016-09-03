@@ -2,7 +2,7 @@ package sputter.jvm.components.registration
 
 import sputter.jvm.components.utils.Sanitisation
 import sputter.jvm.components.utils.Validation._
-import sputter.shared.{RegistrationForm, SimpleRegistrationForm}
+import sputter.shared.SimpleRegistrationForm
 
 import scalaz._
 

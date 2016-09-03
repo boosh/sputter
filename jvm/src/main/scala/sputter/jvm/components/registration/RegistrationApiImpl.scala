@@ -14,7 +14,7 @@ trait RegistrationApiImpl extends RegistrationApi {
 
   val logger: LoggingAdapter
 
-  override def register(form: RegistrationForm): StandardResponse = {
+  override def register(form: SimpleRegistrationForm): StandardResponse = {
     logger.debug(s"Received registration form POST request")
 
     registrationService.handleForm(form = form) match {

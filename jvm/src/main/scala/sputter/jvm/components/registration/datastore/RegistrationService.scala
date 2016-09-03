@@ -1,7 +1,7 @@
 package sputter.jvm.components.registration.datastore
 
 import sputter.jvm.components.exceptions.{AkkaHttpExtensionsException, DataStoreException, ValidationException}
-import sputter.shared.RegistrationForm
+import sputter.shared.SimpleRegistrationForm
 
 import scalaz.{Failure, Success}
 
@@ -10,7 +10,7 @@ import scalaz.{Failure, Success}
   */
 trait RegistrationDataStore {
   // todo: this should return a Future
-  def save(form: RegistrationForm): Either[DataStoreException, String]
+  def save(form: SimpleRegistrationForm): Either[DataStoreException, String]
 }
 
 /**
@@ -18,7 +18,7 @@ trait RegistrationDataStore {
   */
 class RegistrationService(registrationDataStore: RegistrationDataStore) {
 
-  def handleForm(form: RegistrationForm): Either[AkkaHttpExtensionsException, String] = {
+  def handleForm(form: SimpleRegistrationForm): Either[AkkaHttpExtensionsException, String] = {
 
     registrationDataStore.save(form)
 
