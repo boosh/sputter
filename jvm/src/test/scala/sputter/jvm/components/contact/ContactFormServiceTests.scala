@@ -1,12 +1,12 @@
-package sputter.jvm.components.contactform
+package sputter.jvm.components.contact
 
 import org.scalatest._
-import sputter.jvm.components.contactform.datastore.{ContactFormDataStore, ContactFormService}
+import sputter.jvm.components.contact.datastore.{ContactDataStore, ContactService}
 import sputter.jvm.components.exceptions.DataStoreException
-import sputter.shared.contactform.ContactForm
+import sputter.shared.ContactForm
 
 
-class BrokenContactFormDataStore extends ContactFormDataStore {
+class BrokenContactFormDataStore extends ContactDataStore {
 
   override def save(contactForm: ContactForm): Either[DataStoreException, String] =
     Left(DataStoreException("Test error"))
@@ -17,8 +17,8 @@ class BrokenContactFormDataStore extends ContactFormDataStore {
   */
 class ContactFormServiceTests extends WordSpec with Matchers with JsonSupport {
 
-  val brokenService = new ContactFormService(new BrokenContactFormDataStore())
-  val workingService = new ContactFormService(new SimpleContactFormDataStore())
+  val brokenService = new ContactService(new BrokenContactFormDataStore())
+  val workingService = new ContactService(new SimpleContactFormDataStore())
 
   "successful results are returned from the persistence layer" in {
 

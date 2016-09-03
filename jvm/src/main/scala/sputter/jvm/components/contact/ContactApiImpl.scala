@@ -1,19 +1,18 @@
-package sputter.jvm.components.contactform
+package sputter.jvm.components.contact
 
 import akka.event.LoggingAdapter
-import sputter.jvm.components.contactform.datastore.ContactFormService
+import sputter.jvm.components.contact.datastore.ContactService
 import sputter.jvm.components.exceptions.ValidationException
-import sputter.shared.{ResponseError, ResponseOK}
-import sputter.shared.contactform.{ContactForm, ContactFormApi, ContactFormResponse}
+import sputter.shared._
 
 
 /**
   * Endpoint to let users contact you. You can optionally be notified when
   * they do.
   */
-trait ContactFormApiImpl extends ContactFormApi {
+trait ContactApiImpl extends ContactApi {
 
-  val contactFormService: ContactFormService
+  val contactService: ContactService
 
   val logger: LoggingAdapter
 
@@ -21,11 +20,11 @@ trait ContactFormApiImpl extends ContactFormApi {
 
     logger.debug(s"Received contact form POST request with payload: $form")
 
-    contactFormService.handleForm(contactForm = form) match {
+    contactService.handleForm(form = form) match {
         // todo: wrap this in `complete`
-      case Right(_) => ContactFormResponse(status = ResponseOK(), errors = List())
+      case Right(_) => StandardResponse(status = ResponseOK(), errors = List())
       // todo: wrap this in `reject`
-      case Left(e: ValidationException) => ContactFormResponse(
+      case Left(e: ValidationException) => StandardResponse(
         status = ResponseError(), errors = e.errors)
 //        reject(ValidationListRejection(message = e.message, errors = e.errors))
       case Left(e) => throw new RuntimeException(e.message)

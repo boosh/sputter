@@ -3,8 +3,7 @@ package sputter.demo.web.routes
 import sputter.demo.web.components.TopNav
 import sri.core.ReactElement
 import sri.scalacss.Defaults._
-import sputter.demo.web.components._
-import sputter.demo.web.screens.{ContactScreen, HomeScreen}
+import sputter.demo.web.screens.{ContactScreen, HomeScreen, RegistrationScreen}
 import sputter.demo.web.styles.GlobalStyle
 import sri.web.router._
 import sri.web.vdom.htmltags._
@@ -12,6 +11,7 @@ import sri.web.vdom.htmltags._
 object AppRouter {
 
   object HomePage extends WebStaticPage
+  object RegistrationPage extends WebStaticPage
   object ContactPage extends WebStaticPage
 
   object Config extends WebRouterConfig {
@@ -22,6 +22,7 @@ object AppRouter {
 
     override val notFound: WebRouteNotFound = WebRouteNotFound(HomePage)
 
+    staticRoute(page = RegistrationPage, path = "registration", component = (route: WebRoute) => RegistrationScreen())
     staticRoute(page = ContactPage, path = "contact", component = (route: WebRoute) => ContactScreen())
 
     /**

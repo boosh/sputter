@@ -2,7 +2,7 @@ package sputter.demo.web.components
 
 import sputter.demo.web.styles.Colors
 import sri.scalacss.Defaults._
-import sputter.demo.web.routes.AppRouter.{ContactPage, HomePage}
+import sputter.demo.web.routes.AppRouter.{ContactPage, HomePage, RegistrationPage}
 import sri.web.all._
 import sri.web.router.{WebDynamicPage, WebRouterComponent, WebStaticPage}
 import sri.web.vdom.htmltags._
@@ -20,6 +20,7 @@ object TopNav {
     def render() = {
       div(className = styles.navMenu)(
         getStaticItem("Home", HomePage),
+        getStaticItem("Registration", RegistrationPage),
         getStaticItem("Contact", ContactPage)
       )
     }

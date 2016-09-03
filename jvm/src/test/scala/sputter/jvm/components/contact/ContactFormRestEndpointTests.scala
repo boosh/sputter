@@ -1,12 +1,12 @@
-package sputter.jvm.components.contactform
+package sputter.jvm.components.contact
 
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.server._
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import org.scalatest._
 import spray.json._
-import sputter.jvm.components.contactform.datastore.ContactFormService
-import sputter.shared.contactform.ContactForm
+import sputter.jvm.components.contact.datastore.ContactService
+import sputter.shared.ContactForm
 
 
 /**
@@ -15,7 +15,7 @@ import sputter.shared.contactform.ContactForm
 class ContactFormRestEndpointTests extends WordSpec with Matchers
   with ScalatestRouteTest with JsonSupport {
 
-  val endpoint = new ContactFormApiImpl(new ContactFormService(new SimpleContactFormDataStore()))
+  val endpoint = new ContactApiImpl(new ContactService(new SimpleContactFormDataStore()))
 
   "return a MethodNotAllowed error for GET requests" in {
     Get("/contact") ~> Route.seal(endpoint.route) ~> check {

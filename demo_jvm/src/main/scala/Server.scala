@@ -5,15 +5,19 @@ import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.typesafe.config.ConfigFactory
 import sputter.jvm.components.RestRouter
-import sputter.jvm.components.contactform.ContactFormApiImpl
-import sputter.jvm.components.contactform.datastore.ContactFormService
-import sputter.jvm.datastores.mock.contactform.ContactFormMockDataStore
+import sputter.jvm.components.contact.ContactApiImpl
+import sputter.jvm.components.contact.datastore.ContactService
+import sputter.jvm.datastores.mock.contact.ContactMockDataStore
 import akka.http.scaladsl.server.Directives._
-import sputter.shared.contactform.ContactFormApi
+import sputter.shared.{Api, ContactApi, RegistrationApi}
 import lib.CorsSupport
 import akka.http.scaladsl.model.HttpHeader
 import akka.http.scaladsl.model.headers.{`Access-Control-Allow-Credentials`, `Access-Control-Allow-Headers`, `Access-Control-Max-Age`}
+import sputter.jvm.components.registration.RegistrationApiImpl
+import sputter.jvm.components.registration.datastore.RegistrationService
+import sputter.jvm.datastores.mock.registration.RegistrationMockDataStore
 
+//trait ApiImpl extends ContactApiImpl with RegistrationApiImpl
 
 /**
   * Demo server using sputter components.
@@ -21,7 +25,7 @@ import akka.http.scaladsl.model.headers.{`Access-Control-Allow-Credentials`, `Ac
   * Run this with `sbt "project demo_jvm" run` from the directory containing
   * `build.sbt`, or build a fat jar with `sbt "project demo_jvm" assembly`.
   */
-object Server extends App with CorsSupport with ContactFormApiImpl {
+object Server extends App with CorsSupport with ContactApiImpl {
 
   // CORS config
   override val corsAllowOrigins: List[String] = List("http://localhost:8090")
@@ -51,7 +55,8 @@ object Server extends App with CorsSupport with ContactFormApiImpl {
     *   -d '{"body":"test contact form body", "name": "Me", "email": "me@example.com"}' \
     *   http://SERVER_HOST:SERVER_PORT/contact
     */
-  val contactFormService = new ContactFormService(new ContactFormMockDataStore())
+  val contactService = new ContactService(new ContactMockDataStore())
+  val registrationService = new RegistrationService(new RegistrationMockDataStore())
 
   val route = cors {
     get {
@@ -67,7 +72,7 @@ object Server extends App with CorsSupport with ContactFormApiImpl {
           // todo: would be nice to `reject` calls that resulted in errors instead
           // of blindly `complete`-ing everything
           complete {
-            RestRouter.route[ContactFormApi](Server)(
+            RestRouter.route[ContactApi](Server)(
               autowire.Core.Request(
                 s,
                 upickle.default.read[Map[String, String]](e)

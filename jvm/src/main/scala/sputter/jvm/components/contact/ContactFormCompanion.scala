@@ -1,8 +1,8 @@
-package sputter.jvm.components.contactform
+package sputter.jvm.components.contact
 
 import sputter.jvm.components.utils.Sanitisation
 import sputter.jvm.components.utils.Validation._
-import sputter.shared.contactform.ContactForm
+import sputter.shared.ContactForm
 
 import scalaz._
 
@@ -22,11 +22,11 @@ object ContactFormCompanion {
     *
     * @return Error messages on failure, or true if it's valid
     */
-  def validate(contactForm: ContactForm, maxBodySize: Int = 2000): ValidationNel[String, Boolean] = {
+  def validate(form: ContactForm, maxBodyLength: Int = 2000): ValidationNel[String, Boolean] = {
     val validations = List(
-      requireThat(contactForm.body.length > 0)("Please enter your comment"),
-      requireThat(contactForm.body.length < maxBodySize)(s"Your " +
-        s"comment is too long. Please enter no more than $maxBodySize characters")
+      requireThat(form.body.length > 0)("Please enter your comment"),
+      requireThat(form.body.length < maxBodyLength)(s"Your " +
+        s"comment is too long. Please enter no more than $maxBodyLength characters")
     )
 
     reduceValidationFailures(validations)
@@ -37,10 +37,10 @@ object ContactFormCompanion {
     *
     * @return A sanitised AppFeedbackDao object
     */
-  def sanitise(contactForm: ContactForm): ContactForm = {
+  def sanitise(form: ContactForm): ContactForm = {
 
-    contactForm.copy(
-      body = Sanitisation.htmlToText(contactForm.body)
+    form.copy(
+      body = Sanitisation.htmlToText(form.body)
     )
   }
 }
