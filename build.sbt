@@ -19,7 +19,7 @@ lazy val commonSettings = Seq(
   )
 )
 
-lazy val root = (project in file("."))
+lazy val sputterRoot = (project in file("."))
   .settings(commonSettings: _*)
   .settings(Seq(
     publish := {},
@@ -35,7 +35,7 @@ lazy val sputter = crossProject.in(file("."))
   .jvmSettings(
     libraryDependencies ++= Seq(
       "com.typesafe" % "config" % "1.3.0",
-      "com.typesafe.akka" %% "akka-actor" % "2.4.8",
+//      "com.typesafe.akka" %% "akka-actor" % "2.4.8",
       "com.typesafe.akka" % "akka-http-experimental_2.11" % "2.4.8",
       "com.typesafe.akka" %% "akka-http-spray-json-experimental" % "2.4.8",
       "com.typesafe.akka" %% "akka-slf4j" % "2.4.8",
@@ -77,33 +77,3 @@ lazy val sputter = crossProject.in(file("."))
 
 lazy val sputterJvm = sputter.jvm
 lazy val sputterJs = sputter.js
-
-///////// Demo settings /////////
-
-// demo server
-lazy val demo_jvm = project.settings(commonSettings: _*)
-  .dependsOn(sputterJvm)
-
-// demo web app settings
-// copy fastOptJS/fullOptJS  files to assets directory
-val webAssetsDir = "demo_client_web/assets/"
-
-lazy val demo_client_web = project.settings(commonSettings: _*)
-  .enablePlugins(ScalaJSPlugin)
-  .dependsOn(sputterJs)
-  .settings(Seq(
-    libraryDependencies ++= Seq(
-      "com.github.chandu0101.sri" %%% "web" % "0.5.0",
-      "com.github.chandu0101.sri" %%% "scalacss" % "2016.5.0"
-    ),
-
-    crossTarget in(Compile, fullOptJS) := file(webAssetsDir),
-    crossTarget in(Compile, fastOptJS) := file(webAssetsDir),
-    crossTarget in(Compile, packageScalaJSLauncher) := file(webAssetsDir),
-    artifactPath in(Compile, fastOptJS) := ((crossTarget in(Compile, fastOptJS)).value /
-      ((moduleName in fastOptJS).value + "-opt.js")),
-
-    scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature",
-      "-language:postfixOps", "-language:implicitConversions",
-      "-language:higherKinds", "-language:existentials")
-  ))
