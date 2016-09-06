@@ -13,10 +13,23 @@ trait RegistrationDataStore {
   def save(form: SimpleRegistrationForm): Either[DataStoreException, String]
 }
 
+
 /**
-  * Handles form validation and saving it to a backend
+  * Trait to handle the form
   */
-class RegistrationService(registrationDataStore: RegistrationDataStore) {
+trait RegistrationService {
+  def handleForm(form: SimpleRegistrationForm): Either[AkkaHttpExtensionsException, String]
+}
+
+
+/**
+  * Default implementation. Handles form validation and saving it to a
+  * data store
+  *
+  * @param registrationDataStore
+  */
+class RegistrationServiceImpl(registrationDataStore: RegistrationDataStore)
+  extends RegistrationService {
 
   def handleForm(form: SimpleRegistrationForm): Either[AkkaHttpExtensionsException, String] = {
 

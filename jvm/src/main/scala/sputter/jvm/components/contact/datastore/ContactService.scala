@@ -15,10 +15,21 @@ trait ContactDataStore {
   def save(form: ContactForm): Either[DataStoreException, String]
 }
 
+
 /**
-  * Handles form validation and saving it to a backend
+  * Trait to handle the form
   */
-class ContactService(contactDataStore: ContactDataStore) {
+trait ContactService {
+  def handleForm(form: ContactForm): Either[AkkaHttpExtensionsException, String]
+}
+
+/**
+  * Default implementation. Handles form validation and saving it to a
+  * data store
+  *
+  * @param contactDataStore
+  */
+class ContactServiceImpl(contactDataStore: ContactDataStore) extends ContactService {
 
   def handleForm(form: ContactForm): Either[AkkaHttpExtensionsException, String] = {
 
